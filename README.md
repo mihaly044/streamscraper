@@ -2,7 +2,7 @@
 streamscraper is a continuation of [stream-downloader](https://github.com/mihaly044/stream-downloader).
 While stream-downloader only provides the Downloader class to directly download videos from m3u8 streams, **streamscraper** also provides  implementations of the ``IParser`` interface to grab m3u8 stream links from popular streaming sites.
 
-### Building the project
+## Building the project
 Build this project with dotnetcore 2.2 as follows:
 ```bash
 dotnet -c Release --runtime linux-x64
@@ -12,22 +12,22 @@ Find the built executeables under < Project root >/bin/Release/netcoreapp2.2/lin
 See [Microsoft's RID catalog](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog) for other runtime specifications.
 If you are targeting Windows, then use win-x86 instead of linux-x64.
 
-### prerequisites
+## Prerequisites
 FFmpeg is required for the application to function and it needs to be downloaded/installed separately.
-#### FFmpeg on Windows
+### FFmpeg on Windows
 On Windows, download a x32 shared build from [ffmpeg's page](https://ffmpeg.zeranoe.com/builds/) and place ffmpeg.exe besides rtlmost-downloader-cli.exe
-#### FFmpeg on Unix-like systems
+### FFmpeg on Unix-like systems
 Install the appropriate package for your system. For example, on Debian, you'd say
 ```
 sudo apt-get install -y ffmpeg
 ```
 
-### Usage
+## Usage
 Call streamscraper as follows:
 ```bash
 ./streamscraper <parser-type> <url-to-parse> <save-path>
 ```
-#### Available parsers
+### Available parsers
 Parsers are special classes that enables streamscraper to grab download links from streaming sites. There are two parsers already implemented:
 
  - RtlMostParser
@@ -63,7 +63,7 @@ After you have registered your parser class, build the project and call ``stream
 ./streamscraper mycustomparser <url-to-parse> <save-path>
 ```
 
-### Copyright disclaimer
+## Copyright disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
