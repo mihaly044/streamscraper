@@ -3,22 +3,33 @@ streamscraper is a continuation of [stream-downloader](https://github.com/mihaly
 While stream-downloader only provides the Downloader class to directly download videos from m3u8 streams, **streamscraper** also provides  implementations of the ``IParser`` interface to grab m3u8 stream links from popular streaming sites.
 
 ## Prebuilt binaries
-If you do not wish to build the project yourself, you may download the prebuilt binary [v0.0.1-alpha](https://github.com/mihaly044/streamscraper/releases/tag/v0.0.1-alpha).
+If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.2-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.2-rc).
 
 ## Building the project
-Build this project with dotnetcore 2.2 as follows:
+### Linux
+On Linux systems, run quick-build:
 ```bash
-dotnet -c Release --runtime linux-x64
+chmod +x ./quick-build
+./quick-build
 ```
-Find the built executeables under < Project root >/bin/Release/netcoreapp2.2/linux-x64/**publish**
+Find the built and packed executeables for each specified target platform under ``<Project root>/bin/Release/netcoreapp2.2/packed/``
+
+### Windows
+Build from Visual Studio 2017, or use the dotnet CLI tool as follows:
+```
+dotnet publish -c Release --runtime win-x86
+```
+
+Find the built and packed executeables for each specified target platform under ``<Project root>/bin/Release/netcoreapp2.2/win-x86/publish``
+
 #### Targeting other platforms
 See [Microsoft's RID catalog](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog) for other runtime specifications.
-If you are targeting Windows, then use win-x86 instead of linux-x64.
 
 ## Prerequisites
-FFmpeg is required for the application to function and it needs to be downloaded/installed separately.
+FFmpeg is required for the application to function and it needs to be downloaded/installed separately if running on Linux.
 ### FFmpeg on Windows
 On Windows, download a x32 shared build from [ffmpeg's page](https://ffmpeg.zeranoe.com/builds/) and place ffmpeg.exe besides rtlmost-downloader-cli.exe
+**Note**: The current prebuilt versions of streamscraper already contains ffmpeg.
 ### FFmpeg on Unix-like systems
 Install the appropriate package for your system. For example, on Debian, you'd say
 ```
@@ -66,7 +77,7 @@ After you have registered your parser class, build the project and call ``stream
 ./streamscraper mycustomparser <url-to-parse> <save-path>
 ```
 
-## Copyright disclaimer
+## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
