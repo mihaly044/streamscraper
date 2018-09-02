@@ -46,6 +46,7 @@ Parsers are special classes that enables streamscraper to grab download links fr
 
  - RtlMostParser
  - Tv2Parser
+ - MtvaParser
 
 For example, if you want to download from **rtlmost**, you'd say:
 ```bash
