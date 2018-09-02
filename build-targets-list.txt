@@ -1,0 +1,2 @@
+linux-x64
+win-x86
