@@ -18,6 +18,7 @@ namespace streamscraper
             // Register parsers
             ParserFactory.RegisterParser<RtlMostParser>("rtlmost");
             ParserFactory.RegisterParser<Tv2Parser>("tv2");
+            ParserFactory.RegisterParser<MtvaParser>("mtva");
             
             if (args.Length > 0)
             {
