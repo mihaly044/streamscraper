@@ -62,11 +62,6 @@ namespace streamscraper
         public static Tv2Response FromJson(string json) => JsonConvert.DeserializeObject<Tv2Response>(json, Converter.Settings);
     }
 
-    public static class Serialize
-    {
-        public static string ToJson(this Tv2Response self) => JsonConvert.SerializeObject(self, Converter.Settings);
-    }
-
     public static class Converter
     {
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
