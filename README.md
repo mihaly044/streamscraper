@@ -2,6 +2,9 @@
 streamscraper is a continuation of [stream-downloader](https://github.com/mihaly044/stream-downloader).
 While stream-downloader only provides the Downloader class to directly download videos from m3u8 streams, **streamscraper** also provides  implementations of the ``IParser`` interface to grab m3u8 stream links from popular streaming sites.
 
+## Prebuilt binaries
+If you do not wish to build the project yourself, you may download the prebuilt binary [v0.0.1-alpha](https://github.com/mihaly044/streamscraper/releases/tag/v0.0.1-alpha).
+
 ## Building the project
 Build this project with dotnetcore 2.2 as follows:
 ```bash
