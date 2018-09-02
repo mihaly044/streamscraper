@@ -1,2 +1,6 @@
-linux-x64
+win-x64
 win-x86
+debian-x64
+linux-x64
+rhel-x64
+ubuntu-x64
