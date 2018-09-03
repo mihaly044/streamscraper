@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using stream_downloader;
 namespace streamscraper
 {
     public class RtlMostParser: IParser
