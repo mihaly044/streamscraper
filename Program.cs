@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using stream_downloader;
 
 namespace streamscraper
 {
@@ -53,7 +52,7 @@ namespace streamscraper
             var parsedUri = await parser.ParseAsync(uri);
             Console.WriteLine("Downloading {0}\n", (object)parsedUri);
 
-            var downloader = new stream_downloader.Downloader();
+            var downloader = new Downloader();
             downloader.OnDurationInfo += duration => Console.WriteLine("Total duration={0}", (object)duration);
             downloader.OnProgress += (progress, time) =>
             {
