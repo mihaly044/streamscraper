@@ -1,6 +1,8 @@
-## streamscraper
-streamscraper is a continuation of [stream-downloader](https://github.com/mihaly044/stream-downloader).
-While stream-downloader only provides the Downloader class to directly download videos from m3u8 streams, **streamscraper** also provides  implementations of the ``IParser`` interface to grab m3u8 stream links from popular streaming sites.
+## streamscraper [![Build status](https://ci.appveyor.com/api/projects/status/ti9ndirsgqc0ks0u?svg=true)](https://ci.appveyor.com/project/mihaly044/streamscraper) ![License](https://img.shields.io/github/license/mihaly044/streamscraper.svg) [![GitHub issues](https://img.shields.io/github/issues/mihaly044/streamscraper.svg)](https://github.com/mihaly044/streamscraper/issues)
+streamscraper is a handy, cross platform tool for grabbing media from m3u8 streams. It provides the Downloader class (which is essentially an ffmpeg wrapper class) to directly download from m3u8 streams.
+In case you need to do additional parsing to fetch the download URL from some site, there is the ``IParser`` interface that you may use to write your custom parsers.
+
+streamscraper already contains implementations of the ``IParser`` interface to grab m3u8 stream links from popular streaming sites.
 
 ## Prebuilt binaries
 If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.2-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.2-rc).
