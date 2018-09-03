@@ -22,40 +22,32 @@ namespace streamscraper
             
             if (args.Length > 0)
             {
-                try
-                {
-                    var parserType = args[(int)Args.ParserType];
-                    var parser = ParserFactory.GetParser(parserType);
+                var parserType = args[(int)Args.ParserType];
+                var parser = ParserFactory.GetParser(parserType);
 
-                    if(parser == null)
-                    {
-                        throw new Exception("Unknown parser selected");
-                    }
-
-                    var uri = args[(int)Args.Uri];
-                    var savepath = args[(int)Args.SavePath];
-                    Console.WriteLine("Starting with args {0}", string.Join(", ", args));
-                    DoAsyncDownload(uri, savepath, parser);
-                }
-                catch (Exception)
+                if(parser == null)
                 {
-                    PrintUsage();
+                    throw new Exception("Unknown parser selected");
                 }
 
-                Console.ReadKey();
-                Console.WriteLine("Press any key to quit");
+                var uri = args[(int)Args.Uri];
+                var savepath = args[(int)Args.SavePath];
+                Console.WriteLine("Starting with args {0}", string.Join(", ", args));
+                DoAsyncDownload(uri, savepath, parser);
             }
             else
             {
                 PrintUsage();
             }
+
+            Console.ReadKey();
         }
 
         private static void PrintUsage()
         {
             Console.WriteLine("Usage: streamscraper <parsertype> <url> <savepath>");
         }
-
+        
         private static async void DoAsyncDownload(string uri, string savepath, IParser parser)
         {
             var parsedUri = await parser.ParseAsync(uri);
