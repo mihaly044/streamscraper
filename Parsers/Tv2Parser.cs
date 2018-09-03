@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using stream_downloader;
 
 namespace streamscraper
 {
