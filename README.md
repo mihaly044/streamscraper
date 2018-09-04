@@ -8,7 +8,7 @@ streamscraper already contains implementations of the ``IParser`` interface to g
 It indicates that the builds are failing. It's because AppVeyor does not suppport dotnetcore 2.1.2. This will be changed in the future. **You may need to adjust quick-build depending on which framework does the project target.** See `streamscraper.csproj` and `quick-build` files for clarification. The build process and prebuilt binaries **all work as intended and builds successfully.**
 
 ## Prebuilt binaries
-If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.2-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.2-rc).
+If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.2.1-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.2.1-rc).
 
 ## Building the project
 ### Linux
