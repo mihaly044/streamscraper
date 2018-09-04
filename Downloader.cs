@@ -117,6 +117,7 @@ namespace streamscraper
 
                     if (_progress >= 100)
                     {
+                        OnProgress?.Invoke(100, timeStr);
                         OnDownloadComplete?.Invoke();
                     }
                     else

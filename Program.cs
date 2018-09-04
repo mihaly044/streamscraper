@@ -47,7 +47,7 @@ namespace streamscraper
                 if(parsers.Length > 0)
                 {
                     ClrOut("@ ");
-                    Console.Write("Parser [{0}] ? ", string.Join(", ", parsers));
+                    Console.Write("Parser [{0}] : ", string.Join(", ", parsers));
                     parserType = Console.ReadLine().ToLower();
 
                     parser = ParserFactory.GetParser(parserType);
@@ -57,10 +57,10 @@ namespace streamscraper
                     }
 
                     ClrOut("@ ");
-                    Console.Write("URL ? ");
+                    Console.Write("URL : ");
                     uri = Console.ReadLine();
                     ClrOut("@ ");
-                    Console.Write("Save to? (*.mp4) ");
+                    Console.Write("Save to (*.mp4) : ");
                     savepath = Console.ReadLine();
 
                     DoAsyncDownload(uri, savepath, parser);
