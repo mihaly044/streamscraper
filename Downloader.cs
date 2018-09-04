@@ -115,13 +115,14 @@ namespace streamscraper
                 {
                     _progress = progress;
 
-                    /*
-                    var speedArr = dataReceivedEventArgs.Data.Split(new[] { "speed=" }, StringSplitOptions.None);
-                    var speed = speedArr[1].Trim();*/
-
-                    OnProgress?.Invoke(_progress, timeStr);
-                    if (_progress == 100)
+                    if (_progress >= 100)
+                    {
                         OnDownloadComplete?.Invoke();
+                    }
+                    else
+                    {
+                        OnProgress?.Invoke(_progress, timeStr);
+                    }
                 }
             }
         }
