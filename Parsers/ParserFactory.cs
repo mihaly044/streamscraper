@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace streamscraper
 {
@@ -26,6 +27,14 @@ namespace streamscraper
                 return null;
 
             return (IParser)Activator.CreateInstance(_parsers[key]);
+        }
+
+        public static string[] GetAvailableParsers()
+        {
+            if(_parsers == null)
+                return new string[0];
+            else
+                return _parsers.Keys.ToArray();
         }
     }
 }
