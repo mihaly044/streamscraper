@@ -19,27 +19,66 @@ namespace streamscraper
             ParserFactory.RegisterParser<Tv2Parser>("tv2");
             ParserFactory.RegisterParser<MtvaParser>("mtva");
             
+
+            var parserType = "";
+            IParser parser;
+            var uri = "";
+            var savepath = "";
+
+
             if (args.Length > 0)
             {
-                var parserType = args[(int)Args.ParserType];
-                var parser = ParserFactory.GetParser(parserType);
+                parserType = args[(int)Args.ParserType];
+                parser = ParserFactory.GetParser(parserType);
+                uri = args[(int)Args.Uri];
+                savepath = args[(int)Args.SavePath];
 
                 if(parser == null)
                 {
                     throw new Exception("Unknown parser selected");
                 }
 
-                var uri = args[(int)Args.Uri];
-                var savepath = args[(int)Args.SavePath];
                 Console.WriteLine("Starting with args {0}", string.Join(", ", args));
                 DoAsyncDownload(uri, savepath, parser);
             }
             else
             {
-                PrintUsage();
+                var parsers = ParserFactory.GetAvailableParsers();
+                if(parsers.Length > 0)
+                {
+                    ClrOut("@ ");
+                    Console.Write("Parser [{0}] ? ", string.Join(", ", parsers));
+                    parserType = Console.ReadLine().ToLower();
+
+                    parser = ParserFactory.GetParser(parserType);
+                    if(parser == null)
+                    {
+                        throw new Exception("Unknown parser selected");
+                    }
+
+                    ClrOut("@ ");
+                    Console.Write("URL ? ");
+                    uri = Console.ReadLine();
+                    ClrOut("@ ");
+                    Console.Write("Save to? (*.mp4) ");
+                    savepath = Console.ReadLine();
+
+                    DoAsyncDownload(uri, savepath, parser);
+                }
+                else
+                {
+                    throw new Exception("No parsers available");
+                }
             }
 
             Console.ReadKey();
+        }
+
+        private static void ClrOut(string msg)
+        {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write(msg);
+            Console.ResetColor();
         }
 
         private static void PrintUsage()
