@@ -97,7 +97,7 @@ namespace streamscraper
             {
                 Console.Write("Time={0} Complete={1}%\t\r", time, progress);
             };
-            downloader.OnDownloadComplete += () => Console.WriteLine("\r\nDownload complete!");
+            downloader.OnDownloadComplete += () => ClrOut("\r\nDownload complete!");
             downloader.DownloadStream(parsedUri, savepath);
         }
     }
