@@ -87,7 +87,6 @@ namespace streamscraper
                 if (_downloader != null)
                     running = _downloader.IsDownloading();
             }
-            Console.ReadKey();
         }
 
         private static void PrintUsage()
@@ -103,8 +102,19 @@ namespace streamscraper
              _downloader = new Downloader();
             _downloader.OnDurationInfo += duration => ConsoleKit.Message(ConsoleKit.MessageType.INFO, "Total duration={0}\n", (object)duration);
 
+
+            var spinner = new char[]{ '|', '/', '-', '\\' };
+            var spinnerI = 0;
+
             _downloader.OnProgress += (progress, time) =>
             {
+                if(spinnerI > spinner.Length - 1)
+                    spinnerI = 0;
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write($"\t{spinner[spinnerI++]} ");
+                Console.ResetColor();
+
                 Console.Write("Time={0} Complete={1}%\t\r", time, progress);
                 if(progress == 100)
                     Console.Write("\n");
