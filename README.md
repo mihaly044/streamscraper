@@ -6,7 +6,7 @@ In case you need to do additional parsing to fetch the download URL from some si
 streamscraper already contains implementations of the ``IParser`` interface to grab m3u8 stream links from popular streaming sites.
 
 ## Prebuilt binaries
-If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.2.1-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.2.1-rc).
+If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.3.0-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.3.0-rc).
 
 ## Building the project
 ### Linux
