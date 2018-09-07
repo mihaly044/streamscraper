@@ -22,7 +22,19 @@ namespace streamscraper
 
         public Downloader()
         {
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomainOnProcessExit;
+
             Reset();
+        }
+
+        ~Downloader()
+        {
+            AppDomain.CurrentDomain.ProcessExit -= CurrentDomainOnProcessExit;
+        }
+
+        private void CurrentDomainOnProcessExit(object sender, EventArgs eventArgs)
+        {
+            _ffmpeg?.Kill();
         }
 
         /// <summary>
