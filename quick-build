@@ -22,7 +22,7 @@ do
    dotnet publish -c Release --runtime $word
 done
 
-cd bin/Release/netcoreapp2.1.2
+cd bin/Release/net*
 mkdir ../packed
 
 for D in */
