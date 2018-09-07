@@ -106,6 +106,8 @@ namespace streamscraper
             _downloader.OnProgress += (progress, time) =>
             {
                 Console.Write("Time={0} Complete={1}%\t\r", time, progress);
+                if(progress == 100)
+                    Console.Write("\n");
             };
             _downloader.OnDownloadComplete += () => ConsoleKit.Message(ConsoleKit.MessageType.INFO, 
                 "Download complete!\n");
