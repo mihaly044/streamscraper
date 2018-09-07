@@ -4,68 +4,64 @@ using CommandLine;
 
 namespace streamscraper
 {
-    class Program
+    internal class Program
     {
         public class Options
         {
             [Option('g', "guiserve", Required = false, HelpText = "Optimize output for GUI programs")]
-            public bool GuiServe;
+            public bool GuiServe { get; set; }
 
             [Option('p', "parser", Required = true, HelpText = "Specifies which parser the program will use to obtain download links")]
-            public string Parser;
+            public string Parser { get; set; }
 
             [Option('u', "uri", Required = true, HelpText = "The website URL to download from")]
-            public string Uri;
+            public string Uri { get; set; }
 
             [Option('o', "output", Required = true, HelpText = "Location of the file to be saved")]
-            public string Output;
-
-            [Option('v', "verbose", Required = false, "Set output to verbose messages")]
-            public bool Verbose;
+            public string Output { get; set; }
         }
 
-        private enum Args {
-            ParserType = 0,
-            Uri,
-            SavePath
-        }
-
+        private static bool _guiServe;
         private static Downloader _downloader;
 
         static void Main(string[] args)
         {
-            ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "streamscraper starting up...\n");
-            // Register parsers
-            ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "Registering parsers...\n");
             ParserFactory.RegisterParser<RtlMostParser>("rtlmost");
             ParserFactory.RegisterParser<Tv2Parser>("tv2");
             ParserFactory.RegisterParser<MtvaParser>("mtva");
-            ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "Total count of parsers is {0}\n", ParserFactory.GetAvailableParsers().Length);
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                ConsoleKit.Message(ConsoleKit.MessageType.WARNING, "You are running Windows. To paste text, right click on the title" +
-                                                                   "bar to bring up the context menu, and press paste.\n\n");
-            }
-
-            CommandLine.Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
-
-            });
-
-            string parserType;
+            var parserType = "";
             IParser parser;
-            string uri;
-            string savepath;
-
+            var uri = "";
+            var savepath = "";
 
             if (args.Length > 0)
             {
-                parserType = args[(int)Args.ParserType];
-                parser = ParserFactory.GetParser(parserType);
-                uri = args[(int)Args.Uri];
-                savepath = args[(int)Args.SavePath];
+                var parsed = true;
+                Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
+                {
+                    parserType = o.Parser;
+                    uri = o.Uri;
+                    savepath = o.Output;
+                    _guiServe = o.GuiServe;
 
-                if(parser == null)
+                }).WithNotParsed(o =>
+                {
+                    parsed = false;
+                });
+
+                if (!parsed)
+                    return;
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    ConsoleKit.Message(ConsoleKit.MessageType.WARNING, "You appear to be running Windows. To paste text, right click on the title" +
+                                                                       "bar to bring up the context menu, and press paste.\n\n");
+                }
+
+                parser = ParserFactory.GetParser(parserType);
+
+                if (parser == null)
                 {
                     ConsoleKit.Message(ConsoleKit.MessageType.ERROR, "Unknown parser selected\n");
                     return;
@@ -77,13 +73,13 @@ namespace streamscraper
             else
             {
                 var parsers = ParserFactory.GetAvailableParsers();
-                if(parsers.Length > 0)
+                if (parsers.Length > 0)
                 {
                     ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "Parser [{0}]: ", string.Join(", ", parsers));
                     parserType = Console.ReadLine().ToLower();
 
                     parser = ParserFactory.GetParser(parserType);
-                    if(parser == null)
+                    if (parser == null)
                     {
                         ConsoleKit.Message(ConsoleKit.MessageType.ERROR, "Unknown parser selected\n");
                         return;
@@ -91,7 +87,7 @@ namespace streamscraper
 
                     ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "URL: ");
                     uri = Console.ReadLine();
- 
+
                     ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "Save to (*.mp4): ");
                     savepath = Console.ReadLine();
 
@@ -111,11 +107,6 @@ namespace streamscraper
                     running = _downloader.IsDownloading();
             }
         }
-
-        private static void PrintUsage()
-        {
-            Console.WriteLine("Usage: streamscraper <parsertype> <url> <savepath>");
-        }
         
         private static async void DoAsyncDownload(string uri, string savepath, IParser parser)
         {
@@ -123,27 +114,55 @@ namespace streamscraper
             ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "Downloading {0}\n", (object)parsedUri);
 
              _downloader = new Downloader();
-            _downloader.OnDurationInfo += duration => ConsoleKit.Message(ConsoleKit.MessageType.INFO, "Total duration={0}\n", (object)duration);
+            _downloader.OnDurationInfo += duration =>
+            {
+                if (!_guiServe)
+                {
+                    ConsoleKit.Message(ConsoleKit.MessageType.INFO, "Total duration={0}\n", (object) duration);
+                }
+                else
+                {
+                    Console.WriteLine("DURATION_{0}", duration);
+                }
+            };
 
 
-            var spinner = new char[]{ '|', '/', '-', '\\' };
+            var spinner = new[]{ '|', '/', '-', '\\' };
             var spinnerI = 0;
 
             _downloader.OnProgress += (progress, time) =>
             {
-                if(spinnerI > spinner.Length - 1)
-                    spinnerI = 0;
+                if (!_guiServe)
+                {
+                    if (spinnerI > spinner.Length - 1)
+                        spinnerI = 0;
 
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"\t{spinner[spinnerI++]} ");
-                Console.ResetColor();
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write($"\t{spinner[spinnerI++]} ");
+                    Console.ResetColor();
 
-                Console.Write("Time={0} Complete={1}%\t\r", time, progress);
-                if(progress == 100)
-                    Console.Write("\n");
+                    Console.Write("Time={0} Complete={1}%\t\r", time, progress);
+                    if (progress == 100)
+                        Console.Write("\n");
+                }
+                else
+                {
+                    Console.WriteLine("PROGRESS_{0}", progress);
+                }
             };
-            _downloader.OnDownloadComplete += () => ConsoleKit.Message(ConsoleKit.MessageType.INFO, 
-                "Download complete!\n");
+
+            _downloader.OnDownloadComplete += () =>
+            {
+                if (!_guiServe)
+                {
+                    ConsoleKit.Message(ConsoleKit.MessageType.INFO,
+                        "Download complete!\n");
+                }
+                else
+                {
+                    Console.WriteLine("COMPLETE_");
+                }
+            };
             _downloader.DownloadStream(parsedUri, savepath);
         }
     }
