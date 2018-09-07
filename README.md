@@ -1,12 +1,13 @@
 ## streamscraper [![Build status](https://ci.appveyor.com/api/projects/status/ti9ndirsgqc0ks0u?svg=true)](https://ci.appveyor.com/project/mihaly044/streamscraper) ![License](https://img.shields.io/github/license/mihaly044/streamscraper.svg) [![GitHub issues](https://img.shields.io/github/issues/mihaly044/streamscraper.svg)](https://github.com/mihaly044/streamscraper/issues)
 
-streamscraper is a handy, cross platform tool for grabbing media from m3u8 streams. It provides the Downloader class (which is essentially an ffmpeg wrapper class) to directly download from m3u8 streams.
+streamscraper is a handy, cross platform CLI tool for downloading media from m3u8 streams.
+It provides the Downloader class (which is essentially an ffmpeg wrapper class) to directly download from m3u8 streams.
 In case you need to do additional parsing to fetch the download URL from some site, there is the ``IParser`` interface that you may use to write your custom parsers.
 
 streamscraper already contains implementations of the ``IParser`` interface to grab m3u8 stream links from popular streaming sites.
 
 ## Prebuilt binaries
-If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.3.0-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.3.0-rc).
+If you do not wish to build the project yourself, you may download the prebuilt binary [v1.1.0-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.1.0-rc).
 
 ## Building the project
 ### Linux
@@ -45,22 +46,39 @@ sudo apt-get install -y ffmpeg
 If you start streamscraper without parameters, it will ask you to input additonal data. Messages marked with `[INPUT]` means the program is waiting for an input.
 
 ### Launching with parameters
-Call streamscraper as follows:
+To view a list of available commands, use the --help switch 
 ```bash
-./streamscraper <parser-type> <url-to-parse> <save-path>
+./streamscraper --help
 ```
+This outputs:
+```
+
+  -g, --guiserve    Optimize output for GUI programs
+  -p, --parser      Required. Specifies which parser the program will use to 
+                    obtain download links
+  -u, --uri         Required. The website URL to download from
+  -o, --output      Required. Location of the file to be saved
+  --help            Display this help screen.
+  --version         Display version information.
+  ```
+
+To download a movie from RTLMost!, you'd say:
+```bash
+./streamscraper --parser rtlmost --uri https://path-to-rtlmost-video.hu/example --output video.mp4 
+```
+Or the shorthand version:
+
+```bash
+./streamscraper -p rtlmost -u https://path-to-rtlmost-video.hu/example -o video.mp4 
+```
+
 ### Available parsers
 Parsers are special classes that enables streamscraper to grab download links from streaming sites. There are three parsers already implemented:
 
  - RtlMostParser
  - Tv2Parser
  - MtvaParser
-
-For example, if you want to download from **rtlmost**, you'd say:
-```bash
-./streamscraper rtlmost https://path-to-rtlmost-video.hu/example video.mp4
-```
-
+ 
 ### Using custom parsers
 To implement your own parser for a custom site, first create a class that inherits from `IParser` and implement ``ParseAsync`` as follows:
 
