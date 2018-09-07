@@ -1,10 +1,29 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using CommandLine;
 
 namespace streamscraper
 {
     class Program
     {
+        public class Options
+        {
+            [Option('g', "guiserve", Required = false, HelpText = "Optimize output for GUI programs")]
+            public bool GuiServe;
+
+            [Option('p', "parser", Required = true, HelpText = "Specifies which parser the program will use to obtain download links")]
+            public string Parser;
+
+            [Option('u', "uri", Required = true, HelpText = "The website URL to download from")]
+            public string Uri;
+
+            [Option('o', "output", Required = true, HelpText = "Location of the file to be saved")]
+            public string Output;
+
+            [Option('v', "verbose", Required = false, "Set output to verbose messages")]
+            public bool Verbose;
+        }
+
         private enum Args {
             ParserType = 0,
             Uri,
@@ -28,6 +47,10 @@ namespace streamscraper
                 ConsoleKit.Message(ConsoleKit.MessageType.WARNING, "You are running Windows. To paste text, right click on the title" +
                                                                    "bar to bring up the context menu, and press paste.\n\n");
             }
+
+            CommandLine.Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => {
+
+            });
 
             string parserType;
             IParser parser;
