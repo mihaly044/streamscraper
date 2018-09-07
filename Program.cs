@@ -40,9 +40,9 @@ namespace streamscraper
                 var parsed = true;
                 Parser.Default.ParseArguments<Options>(args).WithParsed(o =>
                 {
-                    parserType = o.Parser;
-                    uri = o.Uri;
-                    savepath = o.Output;
+                    parserType = o.Parser.Trim();
+                    uri = o.Uri.Trim();
+                    savepath = o.Output.Trim();
                     _guiServe = o.GuiServe;
 
                 }).WithNotParsed(o =>
@@ -102,7 +102,7 @@ namespace streamscraper
             var running = true;
             while (running)
             {
-                Console.ReadKey();
+                Console.Read();
                 if (_downloader != null)
                     running = _downloader.IsDownloading();
             }
