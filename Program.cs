@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace streamscraper
 {
@@ -18,7 +19,15 @@ namespace streamscraper
             ParserFactory.RegisterParser<RtlMostParser>("rtlmost");
             ParserFactory.RegisterParser<Tv2Parser>("tv2");
             ParserFactory.RegisterParser<MtvaParser>("mtva");
-            
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("Notice: ");
+                Console.ResetColor();
+                Console.Write("You are running Windows. To paste text, right click on the title bar to bring up" +
+                              "the context menu, and press paste.\n");
+            }
 
             var parserType = "";
             IParser parser;
