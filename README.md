@@ -5,11 +5,8 @@ In case you need to do additional parsing to fetch the download URL from some si
 
 streamscraper already contains implementations of the ``IParser`` interface to grab m3u8 stream links from popular streaming sites.
 
-## Note
-It indicates that the builds are failing. It's because AppVeyor does not suppport dotnetcore 2.1.2. This will be changed in the future. **You may need to adjust quick-build depending on which framework does the project target.** See `streamscraper.csproj` and `quick-build` files for clarification. The build process and prebuilt binaries **all work as intended and builds successfully.**
-
 ## Prebuilt binaries
-If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.2.1-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.2.1-rc).
+If you do not wish to build the project yourself, you may download the prebuilt binary [v1.0.3.0-rc](https://github.com/mihaly044/streamscraper/releases/tag/v1.0.3.0-rc).
 
 ## Building the project
 ### Linux
@@ -18,7 +15,7 @@ On Linux systems, run quick-build:
 chmod +x ./quick-build
 ./quick-build -v=version
 ```
-*Specifying a version is optional. The build script only uses the version parameter for naming packed tar.gz releases.
+*Specifying a version is optional.* The build script only uses the version parameter for naming packed tar.gz releases.
 Find the built and packed executeables for each specified target platform under ``<Project root>/bin/Release/netcoreapp2.2/packed/``
 
 ### Windows
