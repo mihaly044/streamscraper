@@ -34,7 +34,11 @@ namespace streamscraper
 
         private void CurrentDomainOnProcessExit(object sender, EventArgs eventArgs)
         {
-            _ffmpeg?.Kill();
+            if(_ffmpeg != null)
+            {
+                if(IsDownloading())
+                    _ffmpeg.Kill();
+            }
         }
 
         /// <summary>
