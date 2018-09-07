@@ -11,20 +11,22 @@ namespace streamscraper
             SavePath
         }
 
+        private static Downloader _downloader;
+
         static void Main(string[] args)
         {
+            ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "streamscraper starting up...\n");
             // Register parsers
+            ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "Registering parsers...\n");
             ParserFactory.RegisterParser<RtlMostParser>("rtlmost");
             ParserFactory.RegisterParser<Tv2Parser>("tv2");
             ParserFactory.RegisterParser<MtvaParser>("mtva");
+            ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "Total count of parsers is {0}\n", ParserFactory.GetAvailableParsers().Length);
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write("Notice: ");
-                Console.ResetColor();
-                Console.Write("You are running Windows. To paste text, right click on the title bar to bring up" +
-                              "the context menu, and press paste.\n");
+                ConsoleKit.Message(ConsoleKit.MessageType.WARNING, "You are running Windows. To paste text, right click on the title" +
+                                                                   "bar to bring up the context menu, and press paste.\n\n");
             }
 
             string parserType;
@@ -42,10 +44,11 @@ namespace streamscraper
 
                 if(parser == null)
                 {
-                    throw new Exception("Unknown parser selected");
+                    ConsoleKit.Message(ConsoleKit.MessageType.ERROR, "Unknown parser selected\n");
+                    return;
                 }
 
-                Console.WriteLine("Starting with args {0}", string.Join(", ", args));
+                ConsoleKit.Message(ConsoleKit.MessageType.INFO , "Starting with args {0}\n", string.Join(", ", args));
                 DoAsyncDownload(uri, savepath, parser);
             }
             else
@@ -53,21 +56,20 @@ namespace streamscraper
                 var parsers = ParserFactory.GetAvailableParsers();
                 if(parsers.Length > 0)
                 {
-                    ClrOut("@ ", ConsoleColor.Cyan);
-                    Console.Write("Parser [{0}] : ", string.Join(", ", parsers));
+                    ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "Parser [{0}]: ", string.Join(", ", parsers));
                     parserType = Console.ReadLine().ToLower();
 
                     parser = ParserFactory.GetParser(parserType);
                     if(parser == null)
                     {
-                        throw new Exception("Unknown parser selected");
+                        ConsoleKit.Message(ConsoleKit.MessageType.ERROR, "Unknown parser selected\n");
+                        return;
                     }
 
-                    ClrOut("@ ", ConsoleColor.Cyan);
-                    Console.Write("URL : ");
+                    ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "URL: ");
                     uri = Console.ReadLine();
-                    ClrOut("@ ", ConsoleColor.Cyan);
-                    Console.Write("Save to (*.mp4) : ");
+ 
+                    ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "Save to (*.mp4): ");
                     savepath = Console.ReadLine();
 
                     DoAsyncDownload(uri, savepath, parser);
@@ -78,14 +80,14 @@ namespace streamscraper
                 }
             }
 
+            var running = true;
+            while (running)
+            {
+                Console.ReadKey();
+                if (_downloader != null)
+                    running = _downloader.IsDownloading();
+            }
             Console.ReadKey();
-        }
-
-        private static void ClrOut(string msg, ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
-            Console.Write(msg);
-            Console.ResetColor();
         }
 
         private static void PrintUsage()
@@ -96,16 +98,54 @@ namespace streamscraper
         private static async void DoAsyncDownload(string uri, string savepath, IParser parser)
         {
             var parsedUri = await parser.ParseAsync(uri);
-            Console.WriteLine("Downloading {0}\n", (object)parsedUri);
+            ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "Downloading {0}\n", (object)parsedUri);
 
-            var downloader = new Downloader();
-            downloader.OnDurationInfo += duration => Console.WriteLine("Total duration={0}", (object)duration);
-            downloader.OnProgress += (progress, time) =>
+             _downloader = new Downloader();
+            _downloader.OnDurationInfo += duration => ConsoleKit.Message(ConsoleKit.MessageType.INFO, "Total duration={0}\n", (object)duration);
+
+            _downloader.OnProgress += (progress, time) =>
             {
-                Console.Write("Time={0} Complete={1}%\t\r", time, progress);
+                DrawTextProgressBar(progress, 100);
             };
-            downloader.OnDownloadComplete += () => ClrOut("\r\nDownload complete!", ConsoleColor.Green);
-            downloader.DownloadStream(parsedUri, savepath);
+            _downloader.OnDownloadComplete += () => ConsoleKit.Message(ConsoleKit.MessageType.INFO, 
+                "Download complete!\n");
+            _downloader.DownloadStream(parsedUri, savepath);
+        }
+
+        private static void DrawTextProgressBar(int progress, int total)
+        {
+            //draw empty progress bar
+            Console.CursorLeft = 0;
+            Console.Write("["); //start
+            Console.CursorLeft = 32;
+            Console.Write("]"); //end
+            Console.CursorLeft = 1;
+            float onechunk = 30.0f / total;
+
+            //draw filled part
+            int position = 1;
+            for (int i = 0; i < onechunk * progress; i++)
+            {
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.CursorLeft = position++;
+                Console.Write(" ");
+            }
+
+            //draw unfilled part
+            for (int i = position; i <= 31; i++)
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.CursorLeft = position++;
+                Console.Write(" ");
+            }
+
+            //draw totals
+            Console.CursorLeft = 35;
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write(progress.ToString() + "%    "); //blanks at the end remove any excess
+
+            if(progress == total)
+                Console.WriteLine();
         }
     }
 }
