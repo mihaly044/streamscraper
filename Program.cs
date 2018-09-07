@@ -29,7 +29,7 @@ namespace streamscraper
                               "the context menu, and press paste.\n");
             }
 
-            var parserType = "";
+            string parserType;
             IParser parser;
             var uri = "";
             var savepath = "";
