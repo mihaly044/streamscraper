@@ -15,7 +15,7 @@ On Linux systems, run quick-build:
 chmod +x ./quick-build
 ./quick-build -v=version
 ```
-*Specifying a version is optional. The build script only uses the version parameter for naming packed tar.gz releases.
+*Specifying a version is optional.* The build script only uses the version parameter for naming packed tar.gz releases.
 Find the built and packed executeables for each specified target platform under ``<Project root>/bin/Release/netcoreapp2.2/packed/``
 
 ### Windows
