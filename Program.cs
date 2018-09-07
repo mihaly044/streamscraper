@@ -31,8 +31,8 @@ namespace streamscraper
 
             string parserType;
             IParser parser;
-            var uri = "";
-            var savepath = "";
+            string uri;
+            string savepath;
 
 
             if (args.Length > 0)
@@ -55,7 +55,7 @@ namespace streamscraper
                 var parsers = ParserFactory.GetAvailableParsers();
                 if(parsers.Length > 0)
                 {
-                    ClrOut("@ ");
+                    ClrOut("@ ", ConsoleColor.Cyan);
                     Console.Write("Parser [{0}] : ", string.Join(", ", parsers));
                     parserType = Console.ReadLine().ToLower();
 
@@ -65,10 +65,10 @@ namespace streamscraper
                         throw new Exception("Unknown parser selected");
                     }
 
-                    ClrOut("@ ");
+                    ClrOut("@ ", ConsoleColor.Cyan);
                     Console.Write("URL : ");
                     uri = Console.ReadLine();
-                    ClrOut("@ ");
+                    ClrOut("@ ", ConsoleColor.Cyan);
                     Console.Write("Save to (*.mp4) : ");
                     savepath = Console.ReadLine();
 
@@ -83,9 +83,9 @@ namespace streamscraper
             Console.ReadKey();
         }
 
-        private static void ClrOut(string msg)
+        private static void ClrOut(string msg, ConsoleColor color)
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ForegroundColor = color;
             Console.Write(msg);
             Console.ResetColor();
         }
@@ -106,7 +106,7 @@ namespace streamscraper
             {
                 Console.Write("Time={0} Complete={1}%\t\r", time, progress);
             };
-            downloader.OnDownloadComplete += () => ClrOut("\r\nDownload complete!");
+            downloader.OnDownloadComplete += () => ClrOut("\r\nDownload complete!", ConsoleColor.Green);
             downloader.DownloadStream(parsedUri, savepath);
         }
     }
