@@ -3,6 +3,18 @@
 # Edit target platforms in build-targets-list.txt
 # (one target per line)
 
+for i in "$@"
+do
+case $i in
+    -v=*|--version=*)
+    VERSION="${i#*=}"
+    ;;
+    *)
+            # unknown option
+    ;;
+esac
+done
+
 rm -rf bin
 
 for word in $(cat build-targets-list.txt)
@@ -10,10 +22,10 @@ do
    dotnet publish -c Release --runtime $word
 done
 
-cd bin/Release/netcoreapp2.2
+cd bin/Release/netcoreapp2.1.2
 mkdir ../packed
 
 for D in */
 do
-   tar czf "../packed/${D%?}.tar.gz" "$D"publish
+   tar czf "../packed/streamscraper-${VERSION}-${D%?}.tar.gz" "$D"publish
 done;
