@@ -42,7 +42,7 @@ namespace streamscraper
                 Parser.Default.ParseArguments<DownloadSubOptions, ListParsersSubOptions>(args)
                 .WithParsed<DownloadSubOptions>(opts => {
                     _guiServe = opts.GuiServe;
-                    var parser = ParserFactory.GetParser(opts.Parser);
+                    var parser = ParserFactory.GetParser(opts.Parser.Trim());
                     if (parser == null)
                     {
                         if(!_guiServe)
