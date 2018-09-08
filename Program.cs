@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 using CommandLine;
 
 namespace streamscraper
@@ -158,6 +159,7 @@ namespace streamscraper
 
             _downloader.OnDownloadComplete += () =>
             {
+                Thread.Sleep(1500);
                 if (!_guiServe)
                 {
                     ConsoleKit.Message(ConsoleKit.MessageType.INFO,
@@ -165,7 +167,7 @@ namespace streamscraper
                 }
                 else
                 {
-                    Console.WriteLine("\nCOMPLETE_");
+                    Console.WriteLine("COMPLETE_");
                 }
             };
             _downloader.DownloadStream(parsedUri, savepath);
