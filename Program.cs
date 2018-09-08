@@ -165,7 +165,7 @@ namespace streamscraper
                 }
                 else
                 {
-                    Console.WriteLine("COMPLETE_");
+                    Console.WriteLine("\nCOMPLETE_");
                 }
             };
             _downloader.DownloadStream(parsedUri, savepath);
