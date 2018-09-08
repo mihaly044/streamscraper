@@ -72,7 +72,7 @@ namespace streamscraper
                 StartInfo =
                 {
                     FileName = "ffmpeg",
-                    Arguments = $"-i {url} -c copy -bsf:a aac_adtstoasc {output}",
+                    Arguments = $"-y -i {url} -c copy -bsf:a aac_adtstoasc {output}",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
