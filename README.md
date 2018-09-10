@@ -42,7 +42,6 @@ This outputs:
   -u, --uri         Required. The website URL to download from
   -o, --output      Required. Location of the file to be saved
   -g, --guiserve    Optimize output for GUI programs
-
 ```
 
 To download a movie from RTLMost!, you'd say:
