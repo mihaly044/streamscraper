@@ -50,4 +50,4 @@ Or the shorthand version:
 ```
 
 ### Wikis
-For more information about building the project and implementing custom parsers, please visit the [wiki pages](https://github.com/mihaly044/streamscraper/wiki)
+For more information about building the project and implementing custom parsers, please visit the [wiki pages](https://github.com/mihaly044/streamscraper/wiki).
