@@ -49,3 +49,5 @@ Or the shorthand version:
 ./streamscraper download -p rtlmost -u https://path-to-rtlmost-video.hu/example -o video.mp4
 ```
 
+### Wikis
+For more information about building the project and implementing custom parsers, please visit the [wiki pages](https://github.com/mihaly044/streamscraper/wiki)
