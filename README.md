@@ -1,6 +1,8 @@
 
 ## streamscraper [![Build status](https://ci.appveyor.com/api/projects/status/ti9ndirsgqc0ks0u?svg=true)](https://ci.appveyor.com/project/mihaly044/streamscraper) ![License](https://img.shields.io/github/license/mihaly044/streamscraper.svg) [![GitHub issues](https://img.shields.io/github/issues/mihaly044/streamscraper.svg)](https://github.com/mihaly044/streamscraper/issues)
 
+![Download (linux-x64)](https://github.com/mihaly044/streamscraper/releases/download/v1.0.6-rev71bf0d/streamscraper-v1.0.6-rev71bf0d-linux-x64.tar.gz)
+![Download (win-x86)](https://github.com/mihaly044/streamscraper/releases/download/v1.0.6-rev71bf0d/streamscraper-v1.0.6-rev71bf0d-win-x86.tar.gz)
 
 streamscraper is a handy, cross platform CLI tool for downloading media from m3u8 streams.
 
