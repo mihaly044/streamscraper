@@ -1,1 +1,1 @@
-[**Home**](index.html) ||| [**Használat**](usage.html) ||| [**Fejlesztői wiki**](/wiki) ||| [![hu_HU](../icons/en.png) English](/)
+[**Home**](index.html) ||| [**Használat**](usage.html) ||| [**Fejlesztői wiki**](/wiki.html) ||| [![hu_HU](../icons/en.png) English](/streamscraper)
