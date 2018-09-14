@@ -1,50 +1,50 @@
-streamscraper is a cross-platform CLI tool for scraping m3u8 links and downloading movies from popular streaming sites.
+{% include_relative header.md %}
 
-## Looking for a graphical interface?
-There is a GUI bundled with the latest version of streamscraper here: [streamscraper-gui](https://github.com/mihaly044/streamscraper-gui).
+## What is streamscraper?
+streamscraper is a cross platform CLI application for grabbing m3u8 stream links from popular streaming websites. It uses [ffmpeg](https://github.com/FFmpeg/FFmpeg) to download movies from the acquired links.
+
+## GUI support
+streamscraper also as a convenient graphical interface. Download pre-built binaries from the official [streamscraper-gui](https://github.com/mihaly044/streamscraper-gui/releases/tag/v.0.2-rev902b52_b7f7988a-beta) repo.
+
+## Installation
+- Download the latest release from here: [https://github.com/mihaly044/streamscraper/releases/latest](https://github.com/mihaly044/streamscraper/releases/latest)
+
 
 ## Usage
-### Launching without parameters
-
-If you start streamscraper without parameters, it will ask you to input additonal data. Messages marked with `[INPUT]` means the program is waiting for an input.
-
-### Launching with parameters
-
-To view a list of available commands, use the --help switch
-
+Start streamscraper with the --help switch to view a list of available commands:
 ```bash
-./streamscraper --help
+streamscraper --help
+````
+This outputs the following message:
 ```
-
-This outputs:
-
+download       Sets the program to download mode
+listparsers    List all the available parsers
+help           Display more information on a specific command.
+version        Display version information.
 ```
-  download       Sets the program to download mode
-  listparsers    List all the available parsers
-  help           Display more information on a specific command.
-  version        Display version information.
-```
-
-### Downloading movies
+### Downloading content
 #### Parameters
 ```
-  -p, --parser      Required. Specifies which parser the program will use to 
-                    obtain download links
-  -u, --uri         Required. The website URL to download from
-  -o, --output      Required. Location of the file to be saved
-  -g, --guiserve    Optimize output for GUI programs
+-p, --parser      Required. Specifies which parser the program will use to 
+                  obtain download links
+-u, --uri         Required. The website URL to download from
+-o, --output      Required. Location of the file to be saved
+-g, --guiserve    Optimize output for GUI programs
 ```
 
-To download a movie from RTLMost!, you'd say:
+To download a movie from rtlmost, you would say:
 
-```bash
-./streamscraper download --parser rtlmost --uri https://path-to-rtlmost-video.hu/example --output video.mp4
 ```
-Or the shorthand version:
-
-```bash
 ./streamscraper download -p rtlmost -u https://path-to-rtlmost-video.hu/example -o video.mp4
 ```
 
-### Wikis
-For more information about building the project and implementing custom parsers, please visit the [wiki pages](https://github.com/mihaly044/streamscraper/wiki).
+## Disclaimer
+Downloading copyrighted content usually requires prior written consent of the author(s). You are only permitted to use this software to download material if you own the aftermentioned written constent and/or the laws of the country you live in permints to do so.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.

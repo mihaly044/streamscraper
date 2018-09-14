@@ -1,0 +1,1 @@
+  [**Home**](/index.html) ||| [**Usage**](usage.html)  ||| [**Developer wiki**](/wiki)  ||| [![hu_HU](icons/hu.png) Magyar nyelvű leírás itt](hu/)
