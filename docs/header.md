@@ -1,1 +1,2 @@
-  [**Home**](/index.html) &#9899 [**Usage**](usage.html) &#9899 [**Developer wiki**](/wiki) &#9899 [![hu_HU](icons/hu.png) Magyar nyelvű leírás itt](hu/)
+[https://github.com/mihaly044/streamscraper/archive/v1.0.6-rev71bf0d.zip](#) [https://github.com/mihaly044/streamscraper/archive/v1.0.6-rev71bf0d.tar.gz](#)
+[**Home**](/index.html) ||| [**Usage**](usage.html) ||| [**Developer wiki**](/wiki) ||| [![hu_HU](icons/hu.png) Magyar nyelvű leírás itt](hu/)
