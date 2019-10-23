@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Threading;
 using CommandLine;
 
@@ -63,17 +62,13 @@ namespace streamscraper
             }
             else
             {
-                var parserType = "";
-                IParser parser;
-                var uri = "";
-                var savepath = "";
                 var parsers = ParserFactory.GetAvailableParsers();
                 if (parsers.Length > 0)
                 {
                     ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "Parser [{0}]: ", string.Join(", ", parsers));
-                    parserType = Console.ReadLine().ToLower();
+                    var parserType = Console.ReadLine()?.ToLower();
 
-                    parser = ParserFactory.GetParser(parserType);
+                    var parser = ParserFactory.GetParser(parserType);
                     if (parser == null)
                     {
                         ConsoleKit.Message(ConsoleKit.MessageType.ERROR, "Unknown parser selected\n");
@@ -81,10 +76,10 @@ namespace streamscraper
                     }
 
                     ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "URL: ");
-                    uri = Console.ReadLine();
+                    var uri = Console.ReadLine();
 
                     ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "Save to (*.mp4): ");
-                    savepath = Console.ReadLine();
+                    var savepath = Console.ReadLine();
 
                     DoAsyncDownload(uri, savepath, parser);
                     Wait();
@@ -119,7 +114,7 @@ namespace streamscraper
                 Console.WriteLine("DOWNLOADING_{0}", parsedUri);
             }
 
-             _downloader = new Downloader();
+            _downloader = new Downloader();
             _downloader.OnDurationInfo += duration =>
             {
                 if (!_guiServe)

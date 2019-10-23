@@ -14,9 +14,8 @@ namespace streamscraper
             where chunk.StartsWith("http")
             select chunk.Split('"')[0].Replace("\\u002F", "/")).ToList();
 
-            foreach (var url in foundMedia)
+            foreach (var url in foundMedia.Where(url => url.Contains("_unpnp.ism/")))
             {
-                if (url.Contains("_unpnp.ism/"))
                 return url;
             }
 
