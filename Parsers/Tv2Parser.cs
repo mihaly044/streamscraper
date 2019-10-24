@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
-namespace streamscraper
+namespace streamscraper.Parsers
 {
     public class Tv2Parser: IParser
     {

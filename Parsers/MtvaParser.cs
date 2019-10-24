@@ -1,11 +1,9 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Collections;
-using System.Collections.Generic;
 
-namespace streamscraper
+namespace streamscraper.Parsers
 {
     public partial class MtvaParser: IParser
     {

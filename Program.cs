@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using CommandLine;
+using streamscraper.Parsers;
 
 namespace streamscraper
 {

@@ -1,23 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace streamscraper
+namespace streamscraper.Parsers
 {
     public static class ParserFactory
     {
         private static IDictionary<string, Type> _parsers;
 
-        public static void RegisterParser<T>(string abbrevation) where T : IParser
+        public static void RegisterParser<T>(string abbr) where T : IParser
         {
             if(_parsers == null)
                 _parsers = new Dictionary<string, Type>();
 
-            if(_parsers.ContainsKey(abbrevation))
+            if(_parsers.ContainsKey(abbr))
                 return;
 
-            _parsers.Add(abbrevation, typeof(T));
+            _parsers.Add(abbr, typeof(T));
 
         }
 
