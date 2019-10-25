@@ -22,6 +22,9 @@ namespace streamscraper
 
             [Option('g', "guiserve", Required = false, HelpText = "Optimize output for GUI programs")]
             public bool GuiServe { get; set; }
+
+            [Option('h', "hidepath", Required = false, HelpText = "Do not print out the physical path of the media file")]
+            public bool HidePath { get; set; }
         }
 
         [Verb("listparsers", HelpText = "List all the available parsers")]
@@ -30,6 +33,7 @@ namespace streamscraper
         }
 
         private static bool _guiServe;
+        private static bool _hidePath;
         private static Downloader _downloader;
 
         static void Main(string[] args)
@@ -43,6 +47,7 @@ namespace streamscraper
                 Parser.Default.ParseArguments<DownloadSubOptions, ListParsersSubOptions>(args)
                 .WithParsed<DownloadSubOptions>(opts => {
                     _guiServe = opts.GuiServe;
+                    _hidePath = opts.HidePath;
                     var parser = ParserFactory.GetParser(opts.Parser.Trim());
                     if (parser == null)
                     {
@@ -98,7 +103,6 @@ namespace streamscraper
             var running = true;
             while (running)
             {
-                Console.Read();
                 if (_downloader != null)
                     running = _downloader.IsDownloading();
             }
@@ -106,13 +110,16 @@ namespace streamscraper
         private static async void DoAsyncDownload(string uri, string savepath, IParser parser)
         {
             var parsedUri = await parser.ParseAsync(uri);
-            if(!_guiServe)
+            if (!_hidePath)
             {
-                ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "Downloading {0}\n", (object)parsedUri);
-            }
-            else
-            {
-                Console.WriteLine("DOWNLOADING_{0}", parsedUri);
+                if (!_guiServe)
+                {
+                    ConsoleKit.Message(ConsoleKit.MessageType.DEBUG, "Downloading {0}\n", (object)parsedUri);
+                }
+                else
+                {
+                    Console.WriteLine("DOWNLOADING_{0}", parsedUri);
+                }
             }
 
             _downloader = new Downloader();
