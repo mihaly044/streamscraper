@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using CommandLine;
 using streamscraper.Parsers;
 
@@ -7,8 +8,7 @@ namespace streamscraper
 {
     internal class Program
     {
-
-    [Verb("download",  HelpText = "Sets the program to download mode")]
+        [Verb("download",  HelpText = "Sets the program to download mode")]
         public class DownloadSubOptions
         {
             [Option('p', "parser", Required = true, HelpText = "Specifies which parser the program will use to obtain download links")]
@@ -42,6 +42,7 @@ namespace streamscraper
             ParserFactory.RegisterParser<Tv2Parser>("tv2");
             ParserFactory.RegisterParser<MtvaParser>("mtva");
 
+
             if (args.Length > 0)
             {
                 Parser.Default.ParseArguments<DownloadSubOptions, ListParsersSubOptions>(args)
@@ -58,8 +59,8 @@ namespace streamscraper
                     }
                     else
                     {
-                        DoAsyncDownload(opts.Uri.Trim(), opts.Output.Trim(), parser);
-                        Wait();
+                        DoAsyncDownload(opts.Uri.Trim(), opts.Output.Trim(), parser).GetAwaiter().GetResult();
+                        // Wait();
                     }
                 })
                 .WithParsed<ListParsersSubOptions>(opts => {
@@ -87,8 +88,8 @@ namespace streamscraper
                     ConsoleKit.Message(ConsoleKit.MessageType.INPUT, "Save to (*.mp4): ");
                     var savepath = Console.ReadLine();
 
-                    DoAsyncDownload(uri, savepath, parser);
-                    Wait();
+                    DoAsyncDownload(uri, savepath, parser).GetAwaiter().GetResult();
+                    // Wait();
                 }
                 else
                 {
@@ -107,7 +108,7 @@ namespace streamscraper
                     running = _downloader.IsDownloading();
             }
         }
-        private static async void DoAsyncDownload(string uri, string savepath, IParser parser)
+        private static async Task DoAsyncDownload(string uri, string savepath, IParser parser)
         {
             var parsedUri = await parser.ParseAsync(uri);
             if (!_hidePath)
@@ -172,8 +173,10 @@ namespace streamscraper
                 {
                     Console.WriteLine("COMPLETE_");
                 }
+
             };
-            _downloader.DownloadStream(parsedUri, savepath);
+
+            await _downloader.DownloadStreamAsync(parsedUri, savepath);
         }
     }
 }

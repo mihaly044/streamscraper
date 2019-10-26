@@ -64,7 +64,7 @@ namespace streamscraper
         /// </summary>
         /// <param name="url"></param>
         /// <param name="output"></param>
-        public void DownloadStream(string url, string output)
+        public async Task DownloadStreamAsync(string url, string output)
         {
             Reset();
             _ffmpeg = new Process
@@ -86,7 +86,7 @@ namespace streamscraper
             _ffmpeg.Start();
             _ffmpeg.BeginOutputReadLine();
             _ffmpeg.BeginErrorReadLine();
-            _ffmpeg.WaitForExit();
+            await _ffmpeg.WaitForExitAsync();
             _started = false;
             _ffmpeg.ErrorDataReceived -= POnErrorDataReceived;
         }
