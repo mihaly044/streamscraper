@@ -126,7 +126,7 @@ namespace streamscraper
 
                 var time = TimeSpan.Parse(timeStr);
 
-                var progress = (int)((time.TotalSeconds / _duration.TotalSeconds) * 100);
+                var progress = (int)(time.TotalSeconds / _duration.TotalSeconds * 100);
                 if (progress != _progress)
                 {
                     _progress = progress;
