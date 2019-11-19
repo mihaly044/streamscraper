@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace streamscraper
@@ -19,10 +20,12 @@ namespace streamscraper
 
         public delegate void DownloadComplete();
         public DownloadComplete OnDownloadComplete;
+        private string _output;
 
         public Downloader()
         {
             AppDomain.CurrentDomain.ProcessExit += CurrentDomainOnProcessExit;
+            Console.CancelKeyPress += CurrentDomainOnProcessExit;
 
             Reset();
         }
@@ -30,15 +33,12 @@ namespace streamscraper
         ~Downloader()
         {
             AppDomain.CurrentDomain.ProcessExit -= CurrentDomainOnProcessExit;
+            Console.CancelKeyPress -= CurrentDomainOnProcessExit;
         }
 
         private void CurrentDomainOnProcessExit(object sender, EventArgs eventArgs)
         {
-            if(_ffmpeg != null)
-            {
-                if(IsDownloading())
-                    _ffmpeg.Kill();
-            }
+            Kill();
         }
 
         /// <summary>
@@ -79,6 +79,7 @@ namespace streamscraper
                     CreateNoWindow = true
                 }
             };
+            _output = output;
 
             _ffmpeg.ErrorDataReceived += POnErrorDataReceived;
 
@@ -100,6 +101,7 @@ namespace streamscraper
             if (_started)
             {
                 _ffmpeg.Kill();
+                File.Delete(_output);
                 return true;
             }
             return false;
