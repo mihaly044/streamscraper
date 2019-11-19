@@ -38,8 +38,6 @@ namespace streamscraper
 
         static void Main(string[] args)
         {
-            AppDomain.CurrentDomain.ProcessExit += (sender, eventArgs) => _downloader?.Kill();
-            
             ParserFactory.RegisterParser<RtlMostParser>("rtlmost");
             ParserFactory.RegisterParser<Tv2Parser>("tv2");
             ParserFactory.RegisterParser<MtvaParser>("mtva");
